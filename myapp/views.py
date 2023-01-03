@@ -121,15 +121,15 @@ class edit(View):
         tag=request.POST["tag"]
         descripcion=request.POST["descripcion"]
         url=request.POST["url"]
-        #foto=request.POST["foto"]
-        foto=request.FILES["foto"]
+        #foto=request.POST["foto"]  #si quito el enctype y pongo foto=request.POST["foto"] entonces cuando yo ponga en el html : <td>{{item.foto.url}}</td>  esto me da /media/foto.jpg -> es decir to me da lo correcto que sería -> /media/images/foto.jpg
+        foto=request.FILES["foto"]  #el enctype hace que yo pueda subir de forma correcta a mi bbdd para que después pueda ser leído y mostrar la foto
 
         proyect=Proyecto.objects.filter(id=id)[0]
         
         proyect.titulo=titulo
-        proyect.foto=foto
-        proyect.descripcion=descripcion
-        proyect.tag=tag
+        proyect.foto=foto      #si lees la línea 124 y piensas ponerle proyect.foto="images/"+ request.POST["foto"] entonces pensarías que funcionaría pero no es así. por eso vuelve a leer la línea 125
+        proyect.descripcion=descripcion         
+        proyect.tag=tag     
         proyect.url=url
         print(proyect.foto)
         proyect.save()
